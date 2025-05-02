@@ -8,7 +8,7 @@ interface Item {
   id: string;
   name: string;
   stockCount: number;
-  minThreshold: number;
+  lowStockAlert: number;
   costPrice: number;
   salePrice: number;
   arrivalDate: string;
@@ -31,7 +31,7 @@ export default function Inventory() {
       id: '1',
       name: 'Sample Item',
       stockCount: 50,
-      minThreshold: 10,
+      lowStockAlert: 10,
       costPrice: 100,
       salePrice: 150,
       arrivalDate: '2024-01-20',
@@ -52,7 +52,7 @@ export default function Inventory() {
       id: '2',
       name: 'Electronics',
       stockCount: 5,
-      minThreshold: 8,
+      lowStockAlert: 8,
       costPrice: 200,
       salePrice: 300,
       arrivalDate: '2024-01-15',
@@ -73,7 +73,7 @@ export default function Inventory() {
       id: '3',
       name: 'Office Supplies',
       stockCount: 100,
-      minThreshold: 20,
+      lowStockAlert: 20,
       costPrice: 50,
       salePrice: 75,
       arrivalDate: '2024-01-25',
@@ -123,7 +123,7 @@ export default function Inventory() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cost Price</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sale Price</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -131,7 +131,7 @@ export default function Inventory() {
             <tbody className="bg-white divide-y divide-gray-200">
               {items.map((item) => {
                 const latestPurchase = item.purchases[item.purchases.length - 1];
-                const isLowStock = item.stockCount <= item.minThreshold;
+                const isLowStock = item.stockCount <= item.lowStockAlert;
                 return (
                   <tr key={item.id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.name}</td>

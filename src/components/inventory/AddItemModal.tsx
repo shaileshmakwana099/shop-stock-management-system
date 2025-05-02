@@ -12,7 +12,7 @@ interface AddItemModalProps {
 interface ItemFormData {
   name: string;
   stockCount: number;
-  minThreshold: number;
+  lowStockAlert: number;
   costPrice: number;
   salePrice: number;
   arrivalDate: string;
@@ -24,7 +24,7 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
   const [formData, setFormData] = useState<ItemFormData>({
     name: '',
     stockCount: 0,
-    minThreshold: 0,
+    lowStockAlert: 0,
     costPrice: 0,
     salePrice: 0,
     arrivalDate: new Date().toISOString().split('T')[0],
@@ -102,62 +102,64 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
               value={formData.name}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
             />
           </div>
+          <div className="grid grid-cols-2">
+            <div className='mr-4'>
+              <label className="block text-sm font-medium text-gray-700">Stock Count</label>
+              <input
+                type="number"
+                name="stockCount"
+                value={formData.stockCount}
+                onChange={handleChange}
+                required
+                min="0"
+                className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Stock Count</label>
-            <input
-              type="number"
-              name="stockCount"
-              value={formData.stockCount}
-              onChange={handleChange}
-              required
-              min="0"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Low Stock Alert</label>
+              <input
+                type="number"
+                name="lowStockAlert"
+                value={formData.lowStockAlert}
+                onChange={handleChange}
+                required
+                min="0"
+                className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
+              />
+            </div>
           </div>
+          <div className="grid grid-cols-2">
+            <div className='mr-4'>
+              <label className="block text-sm font-medium text-gray-700">Cost Price</label>
+              <input
+                type="number"
+                name="costPrice"
+                value={formData.costPrice}
+                onChange={handleChange}
+                required
+                min="0"
+                step="0.01"
+                className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Minimum Threshold</label>
-            <input
-              type="number"
-              name="minThreshold"
-              value={formData.minThreshold}
-              onChange={handleChange}
-              required
-              min="0"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Cost Price</label>
-            <input
-              type="number"
-              name="costPrice"
-              value={formData.costPrice}
-              onChange={handleChange}
-              required
-              min="0"
-              step="0.01"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Sale Price</label>
-            <input
-              type="number"
-              name="salePrice"
-              value={formData.salePrice}
-              onChange={handleChange}
-              required
-              min="0"
-              step="0.01"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Sale Price</label>
+              <input
+                type="number"
+                name="salePrice"
+                value={formData.salePrice}
+                onChange={handleChange}
+                required
+                min="0"
+                step="0.01"
+                className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
+              />
+            </div>
           </div>
 
           <div>
@@ -168,20 +170,23 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
               value={formData.arrivalDate}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Supplier ID</label>
-            <input
-              type="text"
+            <label className="block text-sm font-medium text-gray-700">Supplier</label>
+            <select
               name="supplierId"
               value={formData.supplierId}
-              onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 sm:text-sm"
-            />
+              className="mt-1 block w-full rounded-sm p-1.5 border border-gray-300 focus:border-gray-500 outline-none sm:text-sm"
+            >
+              <option value="">Select Supplier</option>
+              <option value="supplier1">Supplier One</option>
+              <option value="supplier2">Supplier Two</option>
+              <option value="supplier3">Supplier Three</option>
+            </select>
           </div>
 
           <div className="pt-4">
