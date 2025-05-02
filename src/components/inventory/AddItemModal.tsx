@@ -56,8 +56,9 @@ export default function AddItemModal({ isOpen, onClose, onItemAdded }: AddItemMo
       onItemAdded();
       onClose();
       router.refresh();
-    } catch (err) {
+    } catch (error) { // Changed from 'err' to 'error'
       setError('Failed to add item. Please try again.');
+      console.error('Error adding item:', error); // Added error logging
     } finally {
       setIsSubmitting(false);
     }

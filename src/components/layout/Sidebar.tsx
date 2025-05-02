@@ -24,8 +24,9 @@ const Sidebar = () => {
       </div>
       <nav className="mt-4">
         <ul className="space-y-2">
-          {navItems.map((item) => (
+          {navItems.map((item, index) => ( // Added index as key
               <Link
+                key={item.href} // Added key prop
                 href={item.href}
                 className={`flex items-center px-4 py-2 text-sm ${pathname === item.href
                   ? 'bg-gray-800 text-white'
