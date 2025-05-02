@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
-import Navigation from "@/components/layout/Navigation";
+import { Poppins } from 'next/font/google';
+import Sidebar from '@/components/layout/Sidebar';
+import Header from '@/components/layout/Header';
 import "./globals.css";
 
-const geistSans = Geist({
-  subsets: ["latin"],
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -19,11 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.className} antialiased bg-gray-50`}>
-        <Navigation />
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {children}
-        </main>
+      <body className={`${poppins.className} antialiased bg-gray-50`}>
+        <Sidebar />
+        <div className="flex flex-col min-h-screen lg:ml-[220px]">
+          <Header />
+          <main className="flex-1 p-6">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
