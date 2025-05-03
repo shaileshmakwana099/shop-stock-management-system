@@ -24,7 +24,7 @@ const Sidebar = () => {
       </div>
       <nav className="mt-4">
         <ul className="space-y-2">
-          {navItems.map((item, index) => ( // Added index as key
+          {navItems.map((item) => ( // Added index as key
               <Link
                 key={item.href} // Added key prop
                 href={item.href}

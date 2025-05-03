@@ -12,12 +12,19 @@ interface InventoryFormProps {
   };
 }
 
+// Add this interface near the top of the file, after the existing InventoryFormProps interface
+interface Supplier {
+  id: string;
+  name: string;
+}
+
 export default function InventoryForm({ params, searchParams }: InventoryFormProps) {
   const router = useRouter();
   const isEdit = params.action === 'edit';
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [suppliers, setSuppliers] = useState([]);
+  // Update the suppliers state to use the interface
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -43,7 +50,7 @@ export default function InventoryForm({ params, searchParams }: InventoryFormPro
       const data = await response.json();
       setSuppliers(data);
     } catch (err) {
-      setError('Failed to load suppliers');
+      setError('Failed to load suppliers : ${err}');
     }
   };
 
@@ -62,7 +69,7 @@ export default function InventoryForm({ params, searchParams }: InventoryFormPro
         supplierId: data.supplierId
       });
     } catch (err) {
-      setError('Failed to load item details');
+      setError('Failed to load item details : ${err}');
     }
   };
 
@@ -86,7 +93,7 @@ export default function InventoryForm({ params, searchParams }: InventoryFormPro
       if (!response.ok) throw new Error('Failed to save item');
       router.push('/inventory');
     } catch (err) {
-      setError('Failed to save item');
+      setError('Failed to save item : ${err}');
     } finally {
       setIsLoading(false);
     }
@@ -206,7 +213,8 @@ export default function InventoryForm({ params, searchParams }: InventoryFormPro
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             >
               <option value="">Select a supplier</option>
-              {suppliers.map((supplier: any) => (
+              // Update the suppliers.map section
+              {suppliers.map((supplier: Supplier) => (
                 <option key={supplier.id} value={supplier.id}>
                   {supplier.name}
                 </option>
