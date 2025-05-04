@@ -16,7 +16,7 @@ const Sidebar = () => {
     { name: 'Suppliers', href: '/suppliers', icon: '/svg/suppliers.svg' },
     { name: 'Expenses', href: '/expenses', icon: '/svg/pricing.svg' },
     { name: 'Notifications', href: '/notifications', icon: '/svg/notification.svg' },
-    { name: 'Finance', href: '/reports', icon: '/svg/payments.svg' },
+    { name: 'Finance', href: '/finance', icon: '/svg/payments.svg' },
     { name: 'Reports', href: '/reports', icon: '/svg/inventory.svg' },
   ];
 
