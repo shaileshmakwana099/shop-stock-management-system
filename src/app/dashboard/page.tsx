@@ -18,11 +18,69 @@ export default function Dashboard() {
     lowStockItems: 5
   });
 
+  // Sample data for low stock items
+  const lowStockItems = [
+    { name: 'Sample Item 1', currentStock: 5, threshold: 10, status: 'Critical' },
+    { name: 'Sample Item 2', currentStock: 8, threshold: 15, status: 'Critical' },
+    { name: 'Sample Item 3', currentStock: 12, threshold: 20, status: 'Warning' },
+    { name: 'Sample Item 4', currentStock: 7, threshold: 12, status: 'Critical' },
+    { name: 'Sample Item 5', currentStock: 9, threshold: 15, status: 'Warning' },
+  ];
+
+  // Sample data for recent transactions
+  const recentTransactions = [
+    { date: '2024-01-20', item: 'Sample Item 1', type: 'Sale', amount: 500 },
+    { date: '2024-01-19', item: 'Sample Item 2', type: 'Purchase', amount: 800 },
+    { date: '2024-01-18', item: 'Sample Item 3', type: 'Sale', amount: 350 },
+    { date: '2024-01-17', item: 'Sample Item 4', type: 'Sale', amount: 600 },
+    { date: '2024-01-16', item: 'Sample Item 5', type: 'Purchase', amount: 750 },
+  ];
+
+  // Add sample data for supplier bills
+  const supplierBills = [
+    { 
+      supplier: 'Supplier A',
+      invoiceNo: 'INV-001',
+      amount: 2500,
+      dueDate: '2024-02-01',
+      status: 'Overdue'
+    },
+    { 
+      supplier: 'Supplier B',
+      invoiceNo: 'INV-002',
+      amount: 1800,
+      dueDate: '2024-02-05',
+      status: 'Due Soon'
+    },
+    { 
+      supplier: 'Supplier C',
+      invoiceNo: 'INV-003',
+      amount: 3200,
+      dueDate: '2024-02-10',
+      status: 'Due Soon'
+    },
+    {
+      supplier: 'Supplier D',
+      invoiceNo: 'INV-004',
+      amount: 1500,
+      dueDate: '2024-01-30',
+      status: 'Overdue'
+    },
+    {
+      supplier: 'Supplier E',
+      invoiceNo: 'INV-005',
+      amount: 2100,
+      dueDate: '2024-02-15',
+      status: 'Upcoming'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Dashboard Overview</h1>
         
+        {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {/* Total Stock Items */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
@@ -76,58 +134,108 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-
-        {/* Low Stock Alert Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Low Stock Alerts</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Current Stock</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Threshold</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Sample Item</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">5</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">10</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">Critical</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        
+        {/* Two Column Layout for Tables */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Low Stock Alert Section */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Low Stock Alerts</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Stock</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {lowStockItems.map((item, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{item.name}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{item.currentStock}/{item.threshold}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          item.status === 'Critical' 
+                            ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                            : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                        }`}>
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
 
-        {/* Recent Transactions */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h2>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">2024-01-20</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">Sample Item</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Sale</span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">$500</td>
-                </tr>
-              </tbody>
-            </table>
+          {/* Recent Transactions */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Recent Transactions</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {recentTransactions.map((transaction, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{transaction.date}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{transaction.item}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        <span className={`${transaction.type === 'Sale' ? 'text-green-600' : 'text-blue-600'}`}>
+                          ${transaction.amount}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Supplier Bills Due Section */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Supplier Bills Due</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Supplier</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Invoice No</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Due Date</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {supplierBills.map((bill, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{bill.supplier}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{bill.invoiceNo}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">${bill.amount}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{bill.dueDate}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          bill.status === 'Overdue' 
+                            ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                            : bill.status === 'Due Soon'
+                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                            : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                        }`}>
+                          {bill.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

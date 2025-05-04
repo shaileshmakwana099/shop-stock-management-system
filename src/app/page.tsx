@@ -1,11 +1,15 @@
 'use client';
 
-import Dashboard from "./dashboard/page";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Dashboard />
-    </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect to login page by default
+    router.push('/login');
+  }, [router]);
+
+  return null;
 }
