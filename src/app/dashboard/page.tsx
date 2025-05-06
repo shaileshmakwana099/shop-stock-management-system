@@ -75,6 +75,34 @@ export default function Dashboard() {
     }
   ];
 
+  // Add new state for time filter
+  const [timeFilter, setTimeFilter] = useState('today');
+
+  // Add sample data for top selling products
+  const topSellingProducts = {
+    today: [
+      { name: 'Product A', sales: 45, revenue: 2250 },
+      { name: 'Product B', sales: 32, revenue: 1600 },
+      { name: 'Product C', sales: 28, revenue: 1400 },
+      { name: 'Product D', sales: 25, revenue: 1250 },
+      { name: 'Product E', sales: 20, revenue: 1000 },
+    ],
+    weekly: [
+      { name: 'Product B', sales: 180, revenue: 9000 },
+      { name: 'Product A', sales: 165, revenue: 8250 },
+      { name: 'Product E', sales: 140, revenue: 7000 },
+      { name: 'Product C', sales: 120, revenue: 6000 },
+      { name: 'Product F', sales: 100, revenue: 5000 },
+    ],
+    monthly: [
+      { name: 'Product A', sales: 750, revenue: 37500 },
+      { name: 'Product B', sales: 680, revenue: 34000 },
+      { name: 'Product D', sales: 580, revenue: 29000 },
+      { name: 'Product E', sales: 520, revenue: 26000 },
+      { name: 'Product C', sales: 480, revenue: 24000 },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto">
@@ -139,7 +167,12 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Low Stock Alert Section */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Low Stock Alerts</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Low Stock Alerts</h2>
+              {/* <a href="/inventory/low-stocks" className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                View All
+              </a> */}
+            </div>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead>
@@ -237,7 +270,67 @@ export default function Dashboard() {
               </table>
             </div>
           </div>
+
+          {/* Add Top Selling Products section before the two-column layout */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Top Selling Products</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setTimeFilter('today')}
+                  className={`px-4 py-2 text-sm rounded-md ${
+                    timeFilter === 'today'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Today
+                </button>
+                <button
+                  onClick={() => setTimeFilter('weekly')}
+                  className={`px-4 py-2 text-sm rounded-md ${
+                    timeFilter === 'weekly'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Weekly
+                </button>
+                <button
+                  onClick={() => setTimeFilter('monthly')}
+                  className={`px-4 py-2 text-sm rounded-md ${
+                    timeFilter === 'monthly'
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  Monthly
+                </button>
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Product Name</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Units Sold</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Revenue</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {topSellingProducts[timeFilter as keyof typeof topSellingProducts].map((product, index) => (
+                    <tr key={index}>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{product.name}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">{product.sales}</td>
+                      <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white">${product.revenue}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+        
       </div>
     </div>
   );
